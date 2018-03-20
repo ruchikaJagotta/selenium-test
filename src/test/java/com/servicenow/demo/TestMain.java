@@ -62,7 +62,7 @@ public class TestMain extends BaseTestMain {
 		if (null != driver) {
 			driver.quit();
 		}
-		GenerateMail.sendPDFReportByGMail("ruchika.test.from@gmail.com", "Ebsi@1234", "ruchika.test.to@gmail.com",
+		GenerateMail.sendPDFReportByGMail("ruchika.test.from@gmail.com", "*******", "ruchika.test.to@gmail.com",
 				"TestNG report from Eclipse Run", "Enclosed please find attachment");
 	}
 
