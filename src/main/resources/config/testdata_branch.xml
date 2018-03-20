@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TestingData>
+	<TestData_Login>
+		<Username>admin</Username>
+		<Password>admin</Password>
+	</TestData_Login>
+
+	<TestData_Login_Unauthenticate>
+		<Username>kool</Username>
+		<Password>kool</Password>
+	</TestData_Login_Unauthenticate>
+
+	<TestData_AddBranch>
+		<name>Testkl</name>
+		<code>06</code>
+	</TestData_AddBranch>
+
+	<TestData_AddBranch>
+		<name>Testa</name>
+		<code>01</code>
+	</TestData_AddBranch>
+
+	<TestData_AddBranch>
+		<name>Testb</name>
+		<code>02</code>
+	</TestData_AddBranch>
+
+	<TestData_AddBranch>
+		<name>Testc</name>
+		<code>03</code>
+	</TestData_AddBranch>
+
+	<TestData_EditBranch>
+		<name>Testd</name>
+		<code>04</code>
+	</TestData_EditBranch>
+
+	<TestData_minBranch>
+		<name>abc</name>
+		<code>A</code>
+	</TestData_minBranch>
+	
+	<TestData_maxBranch>
+		<name>abcdefghijklmnopqrstuv</name>
+		<code>ABCDEFGHIJKLMNO</code>
+	</TestData_maxBranch>
+	
+	<TestData_PatternBranch>
+		<name>123456</name>
+		<code>abc</code>
+	</TestData_PatternBranch>
+	
+</TestingData>
+
+
+

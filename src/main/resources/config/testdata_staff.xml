@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TestingData>
+	<TestData_Login ID="Login">
+		<Username>admin</Username>
+		<Password>admin</Password>
+	</TestData_Login>
+
+	<TestData_Login ID="Inlogin">
+		<Username>kool</Username>
+		<Password>kool</Password>
+	</TestData_Login>
+
+
+	<TestData_AddStaff >
+		<name>Testkl</name>
+	</TestData_AddStaff>
+
+	<TestData_AddStaff >
+		<name>Testa</name>
+	</TestData_AddStaff>
+
+	<TestData_AddStaff>
+		<name>Testb</name>
+	</TestData_AddStaff>
+	
+	<TestData_EditStaff>
+	<name>editname</name>
+	</TestData_EditStaff>
+	
+	<TestData_minStaff>
+		<name></name>		
+	</TestData_minStaff>
+	
+	<TestData_maxStaff>
+		<name>abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz</name>	
+	</TestData_maxStaff>
+	
+	<TestData_PatternStaff>
+		<name>1234</name>
+	</TestData_PatternStaff>
+
+	
+</TestingData>
+
+
+
