@@ -1,9 +1,14 @@
 package com.servicenow.demo.core;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.maven.shared.utils.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.BrowserType;
@@ -18,19 +23,23 @@ public class Base {
 	public String testStaff_Data = "src/main/resources/config/testdata_staff.xml";
 	public WebDriver webdriver;
 
-	public static WebDriver initializeWebDriverChrome() {
+	/*public static WebDriver initializeWebDriverChrome() {
 		WebDriver webdriver = CustomDriver.InitializeWebdriver(BrowserType.CHROME);
 		webdriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		return webdriver;
 	}
 
-
-	public  WebDriver getWebDriver() {
+	public WebDriver getWebDriver() {
 		return this.webdriver;
+	}*/
+
+	public Base(WebDriver webdriver) {
+		this.webdriver = webdriver;
 	}
 
-	public Base() {
+	/*public Base() {
 		init();
+		System.out.println("base class");
 	}
 
 	private void init() {
@@ -38,7 +47,7 @@ public class Base {
 			webdriver = initializeWebDriverChrome();
 			webdriver.get(Utility.app_url);
 		}
-	}
+	}*/
 
 	public void closeWebdDriver() {
 		if (null != webdriver) {
@@ -63,9 +72,9 @@ public class Base {
 		element.click();
 	}
 
-	public void isElementNotVisible(By by) {
+	public boolean isElementNotVisible(By by) {
 		WebDriverWait wait = new WebDriverWait(webdriver, 10);
-		wait.until(ExpectedConditions.invisibilityOf(webdriver.findElement(by)));
+		return wait.until(ExpectedConditions.invisibilityOf(webdriver.findElement(by)));
 	}
 
 	public void isElementVisible(By by) {
@@ -74,24 +83,33 @@ public class Base {
 	}
 
 	public void isEquals(int object1, int object2) {
-		System.out.println("int elements are compared and are : " + (object1 == object2));
+		System.out.println("Elements are compared and value is : " + (object1 == object2));
 	}
 
 	public void isEquals(String object1, String object2) {
-		System.out.println("string elements are compared and are : " + (object1.equals(object2)));
+		System.out.println("String elements are compared and value is : " + (object1.equals(object2)));
 	}
 
 	public void doClick(WebElement element) {
-
 		WebDriverWait wait = new WebDriverWait(webdriver, 10);
 		element = wait.until(ExpectedConditions.elementToBeClickable(element));
-
 		element.click();
-
 	}
 
 	public void doClickByXpath(String name, WebDriver driver) {
 		WebElement element = driver.findElement(By.xpath(name));
 		doClick(element);
+	}
+
+	public void takeScreenshot() throws IOException {
+		File src = ((TakesScreenshot) webdriver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(src, new File("C:/selenium/Screenshot/error.png"));
+	}
+
+	public static WebDriver initializeBrowser() {
+		WebDriver driver = CustomDriver.InitializeWebdriver(BrowserType.CHROME);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.get(Utility.app_url);
+		return driver;
 	}
 }

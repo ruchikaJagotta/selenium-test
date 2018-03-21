@@ -2,3 +2,5 @@
 /test-classes/
 .settings
 test-output
+target/**
+errorScreenshots

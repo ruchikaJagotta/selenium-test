@@ -9,7 +9,7 @@ import org.openqa.selenium.remote.BrowserType;
 public class CustomDriver implements BrowserType {
 
 	// Takes Browsercode and initialize the particular browser
-	public static WebDriver InitializeWebdriver(String BrowserCode) {
+	public static WebDriver InitializeWebdriver(String BrowserCode ) {
 		WebDriver driver = null;
 		switch (BrowserCode) {
 		case IE:

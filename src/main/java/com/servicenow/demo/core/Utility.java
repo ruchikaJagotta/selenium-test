@@ -11,12 +11,14 @@ import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.servicenow.demo.core.BranchAdd;
 
@@ -26,14 +28,14 @@ public class Utility {
 
 	private static String control_properties_file = "src/main/resources/config/controls.properties";
 	private static String messages_properties_file = "src/main/resources/config/messages.properties";
-	
+
 	private static Properties properties = null;
 	public static String app_url = configReader("Url");
 
 	public void init() {
 		loadProperties();
 	}
-	
+
 	public Utility() {
 		init();
 	}
@@ -53,7 +55,6 @@ public class Utility {
 
 	}
 
-
 	// To read Locators from Property file
 	public static String getControls(String key) throws IOException {
 		if (null == properties) {
@@ -61,11 +62,11 @@ public class Utility {
 		}
 		return properties.getProperty(key);
 	}
-	
-	//To read messages from property file
+
+	// To read messages from property file
 	public static String getMessages(final String key) {
 		if (null == properties) {
-			System.out.println("loading properties for key = "+key);
+			System.out.println("loading properties for key = " + key);
 			loadProperties();
 		}
 		return properties.getProperty(key);
@@ -97,7 +98,7 @@ public class Utility {
 		} catch (Exception e) {
 			System.out.println("No test data found" + e);
 		}
-	//	System.out.println("TestData value is1 " + value);
+		// System.out.println("TestData value is1 " + value);
 
 		return value;
 	}
@@ -146,13 +147,12 @@ public class Utility {
 			String value = el.getElementsByTagName(tagName).item(0).getTextContent();
 			logger.info("value for tagName " + tagName + " is " + value + " ");
 			return value;
-		} catch (Exception e) {
-			System.out.println("No url found");
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			logger.error(e);
 		}
 		return "";
 
 	}
-
 
 	public static Set<BranchAdd> getTestDataAdd(String tagName, String xmlPath) {
 		Set<BranchAdd> listStrings = new HashSet<BranchAdd>();
