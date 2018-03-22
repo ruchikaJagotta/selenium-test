@@ -41,18 +41,10 @@ Open or navigate to DemoTest.java file.
 Run DemoTest.java file as TestNG Test
 ```
 
-## Running the tests via command line
-
-Download sourcecode from git and compile it to jar file (via eclipse or mvn install)
-
-Open commandline console. 
-
-Navigate to folder which contains created jar file named as 'selenium-framework-0.0.1-SNAPSHOT.jar'
-
-Execute following command.
+## Running the tests via command line mvn
 
 ```
-
+mvn install 
 ```
 
 ### Project description 
