@@ -158,7 +158,7 @@ public class DemoTest {
 		if (testResult.getStatus() == ITestResult.FAILURE) {
 			System.out.println(testResult.getStatus());
 			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(scrFile, new File("../Screenshot/" + testResult.getName() + "-"
+			FileUtils.copyFile(scrFile, new File("../../Screenshot/" + testResult.getName() + "-"
 					+ Arrays.toString(testResult.getParameters()) + ".jpg"));
 		}
 		login.logout();

@@ -27,7 +27,7 @@ public class Login extends Base {
 			} else if (menuItems == 2) {
 				doClick(By.xpath(Utility.getControls("dropdown_home_login")));
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			Logger.getLogger(Login.class).error(e);
 		}
 
