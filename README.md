@@ -10,11 +10,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Eclipse                     version 
-Selenium                    version 3.10.0
-Log4j                       version 1.2.17
-Apache maven plugin         version 2.5.2
-ChromeDriver                Version 65.0.3325.181 (Official Build) (32-bit) 
+1.Eclipse                     version 
+2.Selenium                    version 3.10.0
+3.Log4j                       version 1.2.17
+4.Apache maven plugin         version 2.5.2
+5.ChromeDriver                Version 65.0.3325.181 (Official Build) (32-bit) 
 
 
 ### Installing
