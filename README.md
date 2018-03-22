@@ -1,7 +1,7 @@
 # Demo - Selenium, TestNG & report generation.
 
 This framework is based on Selenium Webdriver & TestNG as hybrid framework. 
-Test Data has been entering in form of XML file. 
+Test Data has been entering in form of XML file. Log4j has been entering the logs and screenshots for failed scenarios are collected at specified location.
 
 ## Getting Started
 
