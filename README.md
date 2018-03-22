@@ -1,21 +1,25 @@
 # Demo - Selenium, TestNG & report generation.
 
 This framework is based on Selenium Webdriver & TestNG as hybrid framework. 
-Test Data has been entering in form of XML file. 
+Test Data has been entering in form of XML file. Log4j has been entering the logs and screenshots for failed scenarios are collected at specified location.
 
 ## Getting Started
+
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+1.Eclipse                     version 
+2.Selenium                    version 3.10.0
+3.Log4j                       version 1.2.17
+4.Apache maven plugin         version 2.5.2
+5.ChromeDriver                Version 65.0.3325.181 (Official Build) (32-bit) 
 
-```
-Give examples
-```
 
 ### Installing
+
+Install the eclipse(version mentioned). 
 
 A step by step series of examples that tell you have to get a development env running
 
@@ -39,11 +43,16 @@ Explain how to run the automated tests for this system
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+Framework contains 3 main classes. 
+1. Login 
+2. Branch 
+3. Staff
 
-```
-Give an example
-```
+Login has test cases which checks the login functionality with authenticati.....
+
+Branch class runs the basic functionality for adding , editing , viewing and deleting the branch. Along with that it checks for the validation messages corresponding to the maxlength/minlength/pattern of the name and code text.
+
+Staff class runs the fucntionality as same for branch class , like adding , editing , viewing and deleting the staff. Along with that it checks for validation messages corresponding to the mandatory/maxlength/pattern of the name text.
 
 ### And coding style tests
 
