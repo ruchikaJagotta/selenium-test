@@ -34,6 +34,8 @@ mail.smtp.to
 
 mail.smtp.password
 ```
+*NOTE: Application should be up and running
+
 ## Running the tests via Eclipse
 
 Open or navigate to DemoTest.java file.
