@@ -3,11 +3,9 @@ package com.company.demo.core;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,7 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.company.demo.core.BranchAdd;
+
 
 public class Utility {
 	final static Logger logger = Logger.getLogger(Utility.class);
@@ -66,7 +64,6 @@ public class Utility {
 	// To read messages from property file
 	public static String getMessages(final String key) {
 		if (null == properties) {
-			System.out.println("loading properties for key = " + key);
 			loadProperties();
 		}
 		return properties.getProperty(key);
@@ -93,13 +90,10 @@ public class Utility {
 					value = el.getElementsByTagName(name).item(0).getTextContent();
 				}
 			}
-			System.out.println("TestData value is " + value);
 
 		} catch (Exception e) {
-			System.out.println("No test data found" + e);
+			logger.error(e);
 		}
-		// System.out.println("TestData value is1 " + value);
-
 		return value;
 	}
 
@@ -152,43 +146,6 @@ public class Utility {
 		}
 		return "";
 
-	}
-
-	public static Set<BranchAdd> getTestDataAdd(String tagName, String xmlPath) {
-		Set<BranchAdd> listStrings = new HashSet<BranchAdd>();
-		File file = new File(xmlPath);
-		try {
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(file);
-			doc.getDocumentElement().normalize();
-
-			Element el = doc.getDocumentElement();
-
-			NodeList nodes = el.getElementsByTagName(tagName);
-			for (int i = 0; i < nodes.getLength(); i++) {
-
-				Node node = nodes.item(i);
-				if (node.getNodeType() == Node.ELEMENT_NODE) {
-					NodeList childNodes = node.getChildNodes();
-					BranchAdd add = new BranchAdd();
-					for (int j = 0; j < childNodes.getLength(); j++) {
-						Node childNode = childNodes.item(j);
-						if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-							if (childNode.getNodeName().equals("name")) {
-								add.setName(childNode.getTextContent());
-							} else if (childNode.getNodeName().equals("code")) {
-								add.setCode(childNode.getTextContent());
-							}
-						}
-					}
-					listStrings.add(add);
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("No test data found" + e);
-		}
-		return listStrings;
 	}
 
 }

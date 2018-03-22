@@ -11,7 +11,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import com.company.demo.core.Base;
 import com.company.demo.core.DeleteObject;
 import com.company.demo.core.Utility;
 import com.company.demo.login.Login;
@@ -23,13 +22,6 @@ public class Staff extends Login {
 		super(webdriver);
 	}
 
-	public static void main(String[] args) {
-		Staff staff = new Staff(Base.initializeBrowser());
-		staff.loginTest();
-		staff.clickOnStaff();
-		staff.addStaff_Mandatory();
-	}
-	
 	public void clickOnStaff() {
 		try {
 			webdriver.findElement(By.xpath(Utility.getControls("Entities_Link"))).click();
@@ -48,16 +40,16 @@ public class Staff extends Login {
 			List<String> list = Utility.getTestDataAdd("TestData_AddStaff", "name", testStaff_Data);
 
 			for (int temp = 0; temp < list.size(); temp++) {
-				int elementsPresentInList = webdriver.findElements(By.xpath(Utility.getControls("staff_list"))).size();
-				doClick(webdriver.findElement(By.xpath(Utility.getControls("staff_create_new"))));
-				sendKeys(webdriver.findElement(By.xpath(Utility.getControls("staff_create_name"))), list.get(temp));
+				int elementsPresentInList = webdriver.findElements(By.xpath(Utility.getControls("list_staff"))).size();
+				doClick(webdriver.findElement(By.xpath(Utility.getControls("link_create_staff"))));
+				sendKeys(webdriver.findElement(By.xpath(Utility.getControls("text_name_staff"))), list.get(temp));
 				Select dropdown = new Select(
-						webdriver.findElement(By.xpath(Utility.getControls("staff_choose_branch"))));
+						webdriver.findElement(By.xpath(Utility.getControls("dropdown_code_staff"))));
 				dropdown.selectByIndex(temp + 1);
 
-				doClick(By.cssSelector(Utility.getControls("staff_save")));
-				isElementNotVisible(By.id("saveStaffModal"));
-				int elementsInList = webdriver.findElements(By.xpath(Utility.getControls("staff_list"))).size();
+				doClick(By.cssSelector(Utility.getControls("button_save_staff")));
+				isElementNotVisible(By.id(Utility.getControls("button_save_staff_id")));
+				int elementsInList = webdriver.findElements(By.xpath(Utility.getControls("list_staff"))).size();
 				assertEquals(elementsInList, elementsPresentInList + 1);
 			}
 		} catch (IOException e) {
@@ -76,18 +68,15 @@ public class Staff extends Login {
 
 			// check by id
 			doClick(id_element);
-			String actualValue = webdriver.findElement(By.xpath(Utility.getControls("view_title"))).getText();
-
+			String actualValue = webdriver.findElement(By.xpath(Utility.getControls("title_view"))).getText();
 			assertEquals(actualValue, expectedValue);
-
-			doClick(webdriver.findElement(By.cssSelector(Utility.getControls("view_back"))));
-
+			doClick(webdriver.findElement(By.cssSelector(Utility.getControls("button_back"))));
+			
 			// verify by button
-			doClick(webdriver.findElement(By.xpath(Utility.getControls("view_button"))));
-			actualValue = webdriver.findElement(By.xpath(Utility.getControls("view_title"))).getText();
+			doClick(webdriver.findElement(By.xpath(Utility.getControls("button_view"))));
+			actualValue = webdriver.findElement(By.xpath(Utility.getControls("title_view"))).getText();
 			assertEquals(actualValue, expectedValue);
-
-			doClick(webdriver.findElement(By.cssSelector(Utility.getControls("view_back"))));
+			doClick(webdriver.findElement(By.cssSelector(Utility.getControls("button_back"))));
 		} catch (IOException e) {
 			Logger.getLogger(Staff.class).error(e);
 		}
@@ -99,19 +88,19 @@ public class Staff extends Login {
 
 	public void editStaff() {
 		try {
-			doClick(webdriver.findElement(By.xpath(Utility.getControls("edit_button"))));
+			doClick(webdriver.findElement(By.xpath(Utility.getControls("button_edit"))));
 
 			// To edit name
 			String edit_name = Utility.getTestData("TestData_EditStaff", "name", testStaff_Data);
-			WebElement el_name = webdriver.findElement(By.xpath(Utility.getControls("staff_create_name")));
+			WebElement el_name = webdriver.findElement(By.xpath(Utility.getControls("text_name_staff")));
 			sendKeys(el_name, edit_name);
 
 			// To edit Branch
-			Select dropdown = new Select(webdriver.findElement(By.xpath(Utility.getControls("staff_choose_branch"))));
+			Select dropdown = new Select(webdriver.findElement(By.xpath(Utility.getControls("dropdown_code_staff"))));
 			dropdown.selectByIndex(1);
 
-			doClick(By.cssSelector(Utility.getControls("staff_save")));
-			isElementNotVisible(By.id("saveStaffModal"));
+			doClick(By.cssSelector(Utility.getControls("button_save_staff")));
+			isElementNotVisible(By.id(Utility.getControls("button_save_staff_id")));
 		} catch (IOException e) {
 			Logger.getLogger(Staff.class).error(e);
 		}
@@ -123,25 +112,25 @@ public class Staff extends Login {
 	public void deleteStaff() {
 		try {
 			// To check the id being deleted
-			int elementsPresentInList = webdriver.findElements(By.xpath(Utility.getControls("staff_list"))).size();
+			int elementsPresentInList = webdriver.findElements(By.xpath(Utility.getControls("list_staff"))).size();
 			String id = webdriver.findElement(By.xpath(Utility.getControls("text_view_first_id"))).getText();
 
 			// Click on delete button
-			doClick(webdriver.findElement(By.xpath(Utility.getControls("delete_button"))));
+			doClick(webdriver.findElement(By.xpath(Utility.getControls("button_delete"))));
 			isElementVisible(By.id("deleteStaffConfirmation"));
 
 			// Check the staff id on confirm pop up
 			Gson gson = new Gson();
-			String delete_text = webdriver.findElement(By.xpath(Utility.getControls("staff_delete_text")))
+			String delete_text = webdriver.findElement(By.xpath(Utility.getControls("text_delete_staff")))
 					.getAttribute("translate-values");
 			DeleteObject object = gson.fromJson(delete_text, DeleteObject.class);
 
 			if (id.equals(object.getId())) {
 				// Delete the staff selected
-				doClick(webdriver.findElement(By.xpath(Utility.getControls("staff_delete_confirm"))));
+				doClick(webdriver.findElement(By.xpath(Utility.getControls("button_delete_staff"))));
 			}
-			isElementNotVisible(By.id("deleteStaffConfirmation"));
-			int elementsPresentList = webdriver.findElements(By.xpath(Utility.getControls("staff_list"))).size();
+			isElementNotVisible(By.id(Utility.getControls("staff_delete_id")));
+			int elementsPresentList = webdriver.findElements(By.xpath(Utility.getControls("list_staff"))).size();
 			assertEquals(elementsPresentInList - 1, elementsPresentList);
 		} catch (IOException e) {
 			Logger.getLogger(Staff.class).error(e);
@@ -154,10 +143,10 @@ public class Staff extends Login {
 	public void addStaff_Mandatory() {
 		try {
 			String minName = Utility.getTestData("TestData_minStaff", "name", testStaff_Data);
-			String Expected_mes = Utility.getMessages("staff_create_name_mandatory");
-			doClick(webdriver.findElement(By.xpath(Utility.getControls("staff_create_new"))));
-			sendKeys(webdriver.findElement(By.xpath(Utility.getControls("staff_create_name"))), minName);
-			String message_min_length = webdriver.findElement(By.xpath(Utility.getControls("staff_mandatory_name")))
+			String Expected_mes = Utility.getMessages("text_name_staff_mandatory");
+			doClick(webdriver.findElement(By.xpath(Utility.getControls("link_create_staff"))));
+			sendKeys(webdriver.findElement(By.xpath(Utility.getControls("text_name_staff"))), minName);
+			String message_min_length = webdriver.findElement(By.xpath(Utility.getControls("text_mandatoryName_staff")))
 					.getText();
 			doClick(webdriver.findElement(By.xpath(Utility.getControls("button_cancel"))));
 			assertEquals(message_min_length, Expected_mes);
@@ -173,17 +162,17 @@ public class Staff extends Login {
 		try {
 			String maxName = Utility.getTestData("TestData_maxStaff", "name", testStaff_Data);
 
-			String Expected_mes = Utility.getMessages("staff_create_name_max");
-			isElementNotVisible(By.id("saveStaffModal"));
-			doClick(webdriver.findElement(By.xpath(Utility.getControls("staff_create_new"))));
-			isElementVisible(By.id("saveStaffModal"));
-			sendKeys(webdriver.findElement(By.xpath(Utility.getControls("staff_create_name"))), maxName);
+			String Expected_mes = Utility.getMessages("text_name_staff_max");
+			isElementNotVisible(By.id(Utility.getControls("button_save_staff_id")));
+			doClick(webdriver.findElement(By.xpath(Utility.getControls("link_create_staff"))));
+			isElementVisible(By.id(Utility.getControls("button_save_staff_id")));
+			sendKeys(webdriver.findElement(By.xpath(Utility.getControls("text_name_staff"))), maxName);
 
-			String message_max_length = webdriver.findElement(By.xpath(Utility.getControls("maxLength_name")))
+			String message_max_length = webdriver.findElement(By.xpath(Utility.getControls("text_maxlengthName")))
 					.getText();
 
 			doClick(webdriver.findElement(By.xpath(Utility.getControls("button_cancel"))));
-			isElementNotVisible(By.id("saveStaffModal"));
+			isElementNotVisible(By.id(Utility.getControls("button_save_staff_id")));
 			assertEquals(Expected_mes, message_max_length);
 		} catch (IOException e) {
 			Logger.getLogger(Staff.class).error(e);
@@ -197,13 +186,13 @@ public class Staff extends Login {
 	public void addStaff_Pattern() {
 		try {
 			String pattern = Utility.getTestData("TestData_PatternStaff", "name", testStaff_Data);
-			String Expected_mes = Utility.getMessages("staff_create_name_pattern");
-			doClick(webdriver.findElement(By.xpath(Utility.getControls("staff_create_new"))));
-			isElementVisible(By.id("saveStaffModal"));
-			sendKeys(webdriver.findElement(By.xpath(Utility.getControls("staff_create_name"))), pattern);
-			String message_pattern = webdriver.findElement(By.xpath(Utility.getControls("pattern_name"))).getText();
+			String Expected_mes = Utility.getMessages("text_name_staff_pattern");
+			doClick(webdriver.findElement(By.xpath(Utility.getControls("link_create_staff"))));
+			isElementVisible(By.id(Utility.getControls("button_save_staff_id")));
+			sendKeys(webdriver.findElement(By.xpath(Utility.getControls("text_name_staff"))), pattern);
+			String message_pattern = webdriver.findElement(By.xpath(Utility.getControls("text_patternName"))).getText();
 			doClick(webdriver.findElement(By.xpath(Utility.getControls("button_cancel"))));
-			isElementNotVisible(By.id("saveStaffModal"));
+			isElementNotVisible(By.id(Utility.getControls("button_save_staff_id")));
 			assertEquals(message_pattern, Expected_mes);
 		} catch (IOException e) {
 			Logger.getLogger(Staff.class).error(e);

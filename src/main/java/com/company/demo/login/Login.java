@@ -1,14 +1,12 @@
 package com.company.demo.login;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import com.company.demo.core.Base;
 import com.company.demo.core.Utility;
@@ -19,13 +17,18 @@ public class Login extends Base {
 		super(webdriver);
 	}
 
+
 	public void logout() {
-		int menuItems = webdriver.findElements(By.xpath("//*[@id=\"navbar-collapse\"]/ul/li")).size();
-		if (menuItems == 3) {
-			doClick(By.xpath("//span[@translate='global.menu.account.main']"));
-			doClick(By.xpath("//span[@translate='global.menu.account.logout']"));
-		} else if (menuItems == 2) {
-			doClick(By.xpath("//span[@translate='global.menu.home']"));
+		try {
+			int menuItems = webdriver.findElements(By.xpath(Utility.getControls("menuItems_login"))).size();
+			if (menuItems == 3) {
+				doClick(By.xpath(Utility.getControls("dropdown_account_login")));
+				doClick(By.xpath(Utility.getControls("dropdown_logout_login")));
+			} else if (menuItems == 2) {
+				doClick(By.xpath(Utility.getControls("dropdown_home_login")));
+			}
+		} catch (Exception e) {
+			Logger.getLogger(Login.class).error(e);
 		}
 
 	}
@@ -33,14 +36,14 @@ public class Login extends Base {
 	public void loginTest() {
 		try {
 			// To Login to page
-			doClick(webdriver.findElement(By.linkText(Utility.getControls("Login_link"))));
-			sendKeys(webdriver.findElement(By.id(Utility.getControls("Login_Username"))),
+			doClick(webdriver.findElement(By.linkText(Utility.getControls("link_Login"))));
+			sendKeys(webdriver.findElement(By.id(Utility.getControls("input_username_login"))),
 					Utility.getTestData("TestData_Login", "Username", testBranch_Data));
-			sendKeys(webdriver.findElement(By.id(Utility.getControls("Login_Password"))),
+			sendKeys(webdriver.findElement(By.id(Utility.getControls("input_password_login"))),
 					Utility.getTestData("TestData_Login", "Password", testBranch_Data));
-			doClick(webdriver.findElement(By.xpath(Utility.getControls("Login_Button"))));
-			WebElement home = webdriver.findElement(By.xpath("//span[@translate='global.menu.home']"));
-			assertTrue(home.isDisplayed(), "Login is not sucessfull");
+			doClick(webdriver.findElement(By.xpath(Utility.getControls("button_authenticate_login"))));
+			WebElement home = webdriver.findElement(By.xpath(Utility.getControls("dropdown_home_login")));
+			Assert.assertTrue(home.isDisplayed(), "Login is not sucessfull");
 		} catch (IOException e) {
 			Logger.getLogger(Login.class).error(e);
 		}
@@ -50,18 +53,18 @@ public class Login extends Base {
 
 		try {
 			// To Login to page
-			doClick(webdriver.findElement(By.linkText(Utility.getControls("Login_link"))));
-			webdriver.findElement(By.id(Utility.getControls("Login_Username")))
+			doClick(webdriver.findElement(By.linkText(Utility.getControls("link_Login"))));
+			webdriver.findElement(By.id(Utility.getControls("input_username_login")))
 					.sendKeys(Utility.getTestData("TestData_Login_Unauthenticate", "Username", testBranch_Data));
-			webdriver.findElement(By.id(Utility.getControls("Login_Password")))
+			webdriver.findElement(By.id(Utility.getControls("input_password_login")))
 					.sendKeys(Utility.getTestData("TestData_Login_Unauthenticate", "Password", testBranch_Data));
-			doClick(webdriver.findElement(By.xpath(Utility.getControls("Login_Button"))));
+			doClick(webdriver.findElement(By.xpath(Utility.getControls("button_authenticate_login"))));
 
 			String authentication_error = webdriver
-					.findElement(By.xpath(Utility.getControls("Login_Authentication_error"))).getText();
+					.findElement(By.xpath(Utility.getControls("text_authenticationerror_login"))).getText();
 
 			String Expected_Error = Utility.getMessages("login_error");
-			assertEquals(authentication_error, Expected_Error, "Authentication Error doesn't match");
+			Assert.assertEquals(authentication_error, Expected_Error, "Authentication Error doesn't match");
 		} catch (IOException e) {
 			Logger.getLogger(Login.class).error(e);
 		}
@@ -69,17 +72,17 @@ public class Login extends Base {
 
 	public void loginTest_Succesful() {
 		try {
-			doClick(webdriver.findElement(By.linkText(Utility.getControls("Login_link"))));
-			webdriver.findElement(By.id(Utility.getControls("Login_Username")))
+			doClick(webdriver.findElement(By.linkText(Utility.getControls("link_Login"))));
+			webdriver.findElement(By.id(Utility.getControls("input_username_login")))
 					.sendKeys(Utility.getTestData("TestData_Login", "Username", testBranch_Data));
-			webdriver.findElement(By.id(Utility.getControls("Login_Password")))
+			webdriver.findElement(By.id(Utility.getControls("input_password_login")))
 					.sendKeys(Utility.getTestData("TestData_Login", "Password", testBranch_Data));
-			doClick(webdriver.findElement(By.xpath(Utility.getControls("Login_Button"))));
+			doClick(webdriver.findElement(By.xpath(Utility.getControls("button_authenticate_login"))));
 
-			String authentication_message = webdriver.findElement(By.xpath(Utility.getControls("Login_Authentication")))
+			String authentication_message = webdriver.findElement(By.xpath(Utility.getControls("text_authentication_login")))
 					.getText();
 			String Expected_message = Utility.getMessages("Login_successful");
-			assertEquals(authentication_message, Expected_message, "Login is not successful");
+			Assert.assertEquals(authentication_message, Expected_message, "Login is not successful");
 		} catch (IOException e) {
 			Logger.getLogger(Login.class).error(e);
 		}

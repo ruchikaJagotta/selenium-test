@@ -1,14 +1,9 @@
 package com.company.demo.core;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.maven.shared.utils.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.BrowserType;
@@ -23,36 +18,21 @@ public class Base {
 	public String testStaff_Data = "src/main/resources/config/testdata_staff.xml";
 	public WebDriver webdriver;
 
-	/*public static WebDriver initializeWebDriverChrome() {
-		WebDriver webdriver = CustomDriver.InitializeWebdriver(BrowserType.CHROME);
-		webdriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		return webdriver;
-	}
-
-	public WebDriver getWebDriver() {
-		return this.webdriver;
-	}*/
-
 	public Base(WebDriver webdriver) {
 		this.webdriver = webdriver;
 	}
-
-	/*public Base() {
-		init();
-		System.out.println("base class");
-	}
-
-	private void init() {
-		if (webdriver == null) {
-			webdriver = initializeWebDriverChrome();
-			webdriver.get(Utility.app_url);
-		}
-	}*/
 
 	public void closeWebdDriver() {
 		if (null != webdriver) {
 			webdriver.quit();
 		}
+	}
+	
+	public static WebDriver initializeBrowser() {
+		WebDriver driver = CustomDriver.InitializeWebdriver(BrowserType.CHROME);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.get(Utility.app_url);
+		return driver;
 	}
 
 	public void sendKeys(WebElement element, String value) {
@@ -81,15 +61,7 @@ public class Base {
 		WebDriverWait wait = new WebDriverWait(webdriver, 10);
 		wait.until(ExpectedConditions.visibilityOf(webdriver.findElement(by)));
 	}
-
-	public void isEquals(int object1, int object2) {
-		System.out.println("Elements are compared and value is : " + (object1 == object2));
-	}
-
-	public void isEquals(String object1, String object2) {
-		System.out.println("String elements are compared and value is : " + (object1.equals(object2)));
-	}
-
+	
 	public void doClick(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(webdriver, 10);
 		element = wait.until(ExpectedConditions.elementToBeClickable(element));
@@ -101,15 +73,4 @@ public class Base {
 		doClick(element);
 	}
 
-	public void takeScreenshot() throws IOException {
-		File src = ((TakesScreenshot) webdriver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src, new File("C:/selenium/Screenshot/error.png"));
-	}
-
-	public static WebDriver initializeBrowser() {
-		WebDriver driver = CustomDriver.InitializeWebdriver(BrowserType.CHROME);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get(Utility.app_url);
-		return driver;
-	}
 }
